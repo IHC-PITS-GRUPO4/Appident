@@ -1,0 +1,202 @@
+Feature: Registro del usuario
+  Scenario: Registrar como usuario de la aplicación
+
+  Given que la persona no esta registrado como usuario de la
+  app y el persona se encuentre en la pantalla Iniciar
+  una cuenta, presiona el boton <Registrarse como persona(usuario)>
+
+  When la persona completa los datos requeridos
+  (Nombres, Apellidos, Edad, Genero, Cumpleanios, Correo Electronico y contraseña)
+  y completa el proceso, presionando el boton <Registrarse>
+
+  Then el sistema agrega la persona hacia el sistema de usuarios y se
+  crea una cuenta con su correo y contrasenia que ingreso en la
+  aplicacion y se muestra el mensaje <Bienvenido (nombre del usuario)
+  Se ha registrado con exito>
+
+  Examples:
+  |Nombres | Apellidos  |  Edad | Genero    | Cumpleaños | Correo                | Contraseña  |
+  |Fank    | Florez     |  23   | Masculino | 02/05/1999  | u2018...@upc.edu.pe   | 12@#45678aA  |
+
+  Scenario: Iniciar sesion en la aplicacion
+
+  Given que la persona se ha identificado como usuario de la app y se encuentra en la pantalla de <Iniciar sesion>
+  When  ingresa los datos requeridos que son el correo y contrasenia de autenticidad para acceder como usuario (persona)
+        de la aplicacion y presiona el boton Iniciar Sesion
+  Then  el sistema muestra la pantalla de bienvenida con una barra de diferentes opciones de acceso, un recuadro de 
+        busqueda general y revisar los perfiles de cada odontologo.
+
+  Examples:
+
+  |inicia sesion | Correo               | contrasenia | Iniciar sesion |
+  |identificado  | u2018...@upc.edu.pe  | 12@#45678aA | correcto       |
+
+  Feature: Acceso a información
+  
+  Scenario: Acceso a la información y servicios en general
+  Given que el usuario se encuentra en la pantalla principal de la app
+  And el estudiante selecciona la opción <servicios> en la barra de acceso
+  When selecciona o revisa horarios disponibles para una cita, el sistema carga su información
+  Then se visualiza los odontólogos y horarios disponibles y muestra con su respectiva fecha, hora, lugar y el costo del servicio
+  
+  Examples:
+  |Home     |horarios  |fecha   |hora |lugar               |costo|
+  |servicios|disponible|02/08/22|10 am|Av.Argentina cercado|S/30 |
+  |servicios|disponible|21/08/22|12 am|Jr. Independecia    |S/35 |
+
+  Scenario: Visualizar las comentarios y recomendaciones de los anteriores usuarios
+  
+  Given que el usuario ha identificado la información del servicio, se abre el bloque de comentarios y recomendaciones
+  When  presiona el botón “Comentarios” y la opción se habilita
+  Then  el sistema muestra los comentarios y recomendaciones con las opciones “Comentar” y “Responder”, de las cuales 
+        se abre un espacio para escribir.
+ 
+  Examples:
+  |comentarios y rescomendaciones|comentarios               | recomendaciones|
+  |abrir                         |App confiable             | recomendado    |
+  |abrir                         |Ubicacion en tiempo real  | recomendado    |
+  |abrir                         |Descuentos por usar la app| recomendado    |
+  
+  Feature: Vincular redes sociales
+  Scenario: Visualizar publicaciones recientes en la aplicación
+  
+  Given que se corroboró el registro de la persona con los datos para su proceso como usuario del 
+        sistema y se encuentra en la pantalla <Permiso para acceder información en redes sociales>
+  When el usuario selecciona la opción <Permitir> en ese momento
+  Then el sistema le envía notificaciones de la publicación sobre la vinculación con la app en cada red social
+  
+  Examples:
+  |registro|home                    |Permitir  |notificacion|
+  |correcto|acceder a la informacion|selecciona|enviado     |
+
+  Feature: Vincular redes sociales
+  Scenario: Visualizar referencias de odontólogos para una mejor experiencia
+
+  Given que el usuario se encuentra en la pantalla principal y presiona la barra de acceso
+  When selecciona el botón <puntuaciones de odontólogos>
+  Then el sistema muestra en pantalla a todos los odontólogos registrados con sus respectivas puntuaciones y calificaciones
+  
+  Examples:
+  |home           |puntuaciones de odontólogos|puntuaciones|calificaciones|
+  |barra de acceso|muestra                    |  10        |5             |
+
+  Feature: Visualizar las fechas disponibles
+  Scenario: Visualizar los horarios de los diferentes odontologos
+  
+  Given que el usuario se encuentra en el perfil de un odontologo y presiona la lupa para buscar los horarios disponibles
+  When selecciona el boton <horarios disponibles>
+  Then el sistema muestra en pantalla todos los horarios disponible
+
+  Examples:
+  |Lupa     | Horarios disponible|
+  |horarios | 10 am: 2pm : 4pm   |
+
+
+  Feature: Opinar del servicio recivido
+  Scenario:  Calificar servicio brindado
+
+  Given que el usuario se encuentra en el servicio que le proporciono  la app
+  When se termina tratamiento, procedera con la calificacion del servicio con 0 a 5 estrellas
+  Then el sistema guarda la calificacion
+  And se promedia con las calificaciones previas de los servicios que eligio
+
+  Examples:
+  |Calificar|
+  |  0 o 5  |
+
+  Scenario: Escribir del servicio brindado
+
+  Given que el usuario se encuentra en la seccion de calificacion de servico
+  And presiona el boton Escribir comentario
+  When escribe su comentario sobre el servicio
+  And presiona el boton Enviar
+  Then el sistema agrega el comentario a la seccion de Valoraciones del servicio.
+
+  Examples:
+  |Cometario                 | Enviar|
+  |El servico...es bueno etc | si    |
+
+  Feature: Precios de los servicios
+  Scenario: El usuario busca el precio mas comodo del servicio que requiere
+
+  Given que se verifico en el Sistema que los datos del usuario ya se encuentran registrados .
+  And el usuario  ya se encuentre en la seccion de <Precios por servicio>
+  When  el cliente digita el servicio que requiere
+  Then la aplicacion le mostrara todos los precios comparados en una lista
+
+  Examples:
+  |Precios por servicio| Lista                 |
+  | Periodoncia        | S/150 , S/180 , S/160 |
+
+  Feature: Asistencia con odontologos mas confiables
+  Scenario: usuario necesita un atención de un malestar menor
+
+  Given que se verificó en el sistema que los datos del usuario ya se encuentran registrados
+  And el usuario se encuentra en la seccion <Atencion medica>
+  And el usuario coloque el servicio que requiere
+  When el usuario haga click en <consultar>
+  Then el sistema le muestra una clínica cercana disponible 
+  
+  Examples:
+  |usuario   |Atencion medica|clik     |mostrar       |
+  |registrado|Periodoncia    |consultar|clinica a 5 km|
+
+  Feature: Cancelar servicio con anticipación
+  Scenario: Cancelación de servicio
+
+  Given que el usuario se encuentra en la pantalla Mis reservas
+  When selecciona el servicio requerido
+  And presiona el botón Cancelar servicio, aparece el formulario de "Motivo de cancelación"
+  And después de rellenarlo, presiona el botón Enviar
+  Then el mensaje se enviará en la app y se cancelará el servicio si está en el rango estimado.
+  
+  Examples:
+  |home        |servicio  |cancelar|motivo    |enviar|
+  |mis reservas|ortodoncia|si      |sin tiempo|si    |
+
+  Feature: Atencion al cliente
+  Scenario:Atencion con el odontologo
+
+  Given que se verifico en el sistema que los datos del usuario ya se encuentran registrados
+  When requiera contactarse con el odontologo de su preferencia
+  Then le llegara una notificacion al odontologo para poder conectarse
+
+  Examples:
+  |Datos del usuario| Contactar odontologo|
+  | Resgistrados    |  notificacion       |
+  
+  Scenario: Recomendaciones del odontólogo
+  
+  Given que el usuario se encuentra en contacto con el odontólogo
+  When le indique su malestar
+  Then el odontólogo le indicará algunos tips y/o recomendaciones a seguir
+  
+  Examples:
+  |odontologo |malestar      |indicaciones       |
+  |en contacto|dolor de muela|comprar un calmante|
+
+  Feature: Registro de la empresa
+  Scenario: Registrar como empresa de la aplicacion
+
+  Given que la empresa no esta registrada habra una opcion llamada <Trabaja con nosotros> al
+        presionarla saldra una serie de requisitos que tiene que completar.
+  When la empresa completa los datos requeridos y completa el proceso, presionando el bottn <enviar solicitud>
+  Then el sistema automaticamente empezara a validar los datos de la empresa y si el caso
+       procede, la empresa tendra una cuenta personalizada para que pueda ofrecer sus servicios.
+
+  Examples:
+  |Completar datos     | dato completados |
+  |Trabaja con nosotros| Enviar           |
+
+  Feature: Gestionar de mejor manera mis servicios
+  Scenario: Modelo a la hora de un problema con el usuario
+
+  Given que el usuario tuvo un problema al contratar los servicios
+  And la empresa quiere que este proceso se resuelva lo más rápido posible
+  When el usuario presente su queja, la administración de la app se encargará de analizar el caso
+  Then el proceso se hará mucho más sencillo para las dos partes tanto consumidor como empresa.
+  
+  Examples:
+  |contactar servicio|queja    |administarcion|
+  |error             |presentar|solucion      |
+  
